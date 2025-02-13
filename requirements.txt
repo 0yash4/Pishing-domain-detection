@@ -1,0 +1,17 @@
+pandas
+numpy
+seaborn
+matplotlib
+streamlit
+scikit-learn
+dill
+cymruwhois
+dnspython
+whois
+python-whois
+python-dotenv 
+xgboost
+joblib
+uvicorn 
+fastapi
+-e .
