@@ -13,9 +13,17 @@ jobs:
     runs-on: self-hosted
 
     steps:
+    - name: Free up disk space by removing unused Docker resources
+      run: |
+        sudo docker stop $(sudo docker ps -aq) || true
+        sudo docker rm -f $(sudo docker ps -aq) || true
+        sudo docker system prune -a -f --volumes
+
     - name: Pull Docker image
       run: sudo docker pull 0yash4/pishing-domain-detection:latest
-    - name: Delete Old docker container
+
+    - name: Delete Old docker container (if exists)
       run: sudo docker rm -f pishing-domain-detection || true
+
     - name: Run Docker Container
-      run: sudo  docker run -p 8501:8501 pishing-domain-detection 0yash4/pishing-domain-detection:latest
+      run: sudo docker run -d --name pishing-domain-detection -p 8501:8501 0yash4/pishing-domain-detection:latest
