@@ -20,10 +20,10 @@ jobs:
         password: ${{ secrets.DOCKER_PASS }}
 
     - name: Build the Docker image
-      run: docker build -t 0yash4/pishing-domain-detection:latest .
+      run: sudo docker build -t 0yash4/pishing-domain-detection:latest .
 
     - name: Push to Docker Hub
-      run: docker push 0yash4/pishing-domain-detection:latest
+      run: sudo docker push 0yash4/pishing-domain-detection:latest
     
     - name: Remove local Docker image
-      run: docker rmi 0yash4/pishing-domain-detection:latest --force
+      run: sudo docker rmi 0yash4/pishing-domain-detection:latest --force
