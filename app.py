@@ -6,6 +6,7 @@ import streamlit as st
 from src.pipeline.prediction import custom_final_df
 from src.utils import load_object
 
+st.title("Pishing Domain")
 st.header("Pishing Domain Detection")
 
 pkl_file_path = os.path.join("artifacts", "model.pkl")
