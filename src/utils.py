@@ -23,9 +23,15 @@ def save_object(file_path, obj):
     
 def load_object(file_path):
     try:
-        with open (file_path, "rb") as file_obj:
-            return joblib.load(file_obj)
-        
+        with open(file_path, "rb") as f:
+            return pickle.load(f)
+    except FileNotFoundError:
+        print(f"❌ ERROR: File not found at {file_path}")
+        raise CustomException("Pickle file not found", sys)
+    except pickle.UnpicklingError:
+        print("❌ ERROR: Corrupt or incompatible pickle file")
+        raise CustomException("Pickle file corrupted", sys)
     except Exception as e:
+        print(f"❌ ERROR: {str(e)}")
         raise CustomException(e, sys)
     
