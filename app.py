@@ -1,29 +1,31 @@
-import os
-
+import requests
 import streamlit as st
 
-#from src.components.data_engineer import DataNormalization
-from src.pipeline.prediction import custom_final_df
-from src.utils import load_object
+# API endpoint URL
+API_URL = "http://127.0.0.1:8000/predict/"
 
-st.title("Pishing Domain")
-st.header("Pishing Domain Detection")
+# Streamlit App UI
+st.set_page_config(page_title="Phishing Domain Detector", layout="centered")
 
-pkl_file_path = os.path.join("artifacts", "model.pkl")
+st.title("🔍 Phishing Domain Detection")
+st.write("Enter a URL below to check if it is a **safe site** or a **phishing site**.")
 
-#loading pickle file
-model = load_object(pkl_file_path)
+# Input field for URL
+url_input = st.text_input("Enter URL:", placeholder="https://example.com")
 
-
-#Input Column for the URL
-url = st.text_input(label="Enter the URL")
-
-if st.button(label="Check Pish or not"):
-    custom_data = custom_final_df(url)
-    df = custom_data.final_df()
-    # df = DataNormalization.init_normalization()
-    predict = model.predict(df)
-    if predict[0] == 1:
-        st.write("Given is a Phishing Site")
+if st.button("Check URL"):
+    if url_input:
+        # Send POST request to FastAPI backend
+        response = requests.post(API_URL, json={"url": url_input})
+        
+        if response.status_code == 200:
+            result = response.json()
+            st.success(f"Prediction: **{result['prediction']}**")
+        else:
+            st.error("Error occurred while fetching prediction.")
     else:
-        st.write("It's safe")
+        st.warning("Please enter a URL.")
+
+# Footer
+st.markdown("---")
+st.caption("Developed using FastAPI & Streamlit | Made for Phishing Detection")

@@ -12,26 +12,36 @@ from src.exception import CustomException
 def save_object(file_path, obj):
     try:
         dir_path = os.path.dirname(file_path)
-
         os.makedirs(dir_path, exist_ok=True)
 
         with open(file_path, "wb") as file_obj:
             joblib.dump(obj, file_obj)
 
     except Exception as e:
-        raise CustomException(e, sys)
+        raise CustomException(f"Error saving object: {str(e)}", sys)
     
 def load_object(file_path):
+    """
+    Load a serialized object from a file using joblib.
+
+    Args:
+        file_path (str): Path to the joblib file.
+
+    Returns:
+        object: The loaded object (e.g., a trained model).
+    
+    Raises:
+        CustomException: If the file is corrupted or not found.
+    """
     try:
-        with open(file_path, "rb") as f:
-            return pickle.load(f)
-    except FileNotFoundError:
-        print(f"❌ ERROR: File not found at {file_path}")
-        raise CustomException("Pickle file not found", sys)
-    except pickle.UnpicklingError:
-        print("❌ ERROR: Corrupt or incompatible pickle file")
-        raise CustomException("Pickle file corrupted", sys)
+        if not os.path.exists(file_path):
+            raise CustomException(f"File not found: {file_path}")
+
+        with open(file_path, "rb") as file:
+            obj = joblib.load(file)  # Load object using joblib
+        return obj
+
     except Exception as e:
         print(f"❌ ERROR: {str(e)}")
-        raise CustomException(e, sys)
+        raise CustomException(f"Error loading object: {str(e)}", sys)
     
