@@ -2,7 +2,6 @@ pandas
 numpy
 seaborn
 matplotlib
-streamlit
 scikit-learn
 dill
 cymruwhois
@@ -12,6 +11,7 @@ python-whois
 python-dotenv 
 xgboost
 joblib
-uvicorn 
+uvicorn
+requests 
 fastapi
 -e .

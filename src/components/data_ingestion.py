@@ -8,7 +8,7 @@ from data_ingestion_config import DataIngestionConfig
 
 from src.exception import CustomException
 from src.logger import logging
-from src.pipeline.model_trainer import model_training
+from src.pipeline.model_trainer import ModelTraining
 
 
 @dataclass
@@ -45,9 +45,9 @@ class data_initailization:
 
 if __name__ == "__main__":
     obj=data_initailization()
-    input_data_path, output_data = obj.initiate_data_ingestion()
+    input_data_path, output_data_path = obj.initiate_data_ingestion()
     input_data = pd.read_csv(input_data_path)
     #data_norm = DataNormalization()
     #data_norm.save_normalized_data(input_data)
-    #trainer = model_training()
-    #trainer.model_trainer(input_data, output_data)
+    trainer = ModelTraining()
+    trainer.model_trainer(input_data_path, output_data_path)

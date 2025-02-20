@@ -17,56 +17,54 @@ from src.utils import save_object
 
 
 @dataclass
-class model_trainer_config:
-    trained_model_file_path = os.path.join("artifacts", "model.pkl")
-    
+class ModelTrainerConfig:
+    trained_model_file_path: str = os.path.join("artifacts", "model.pkl")
 
-class model_training:
+class ModelTraining:
     def __init__(self):
-        self.model_trainer_config = model_trainer_config()
+        self.model_trainer_config = ModelTrainerConfig()
         
     def model_trainer(self, input_data, output_data):
         try:
+            # Load input & output data
             input_data = pd.read_csv(input_data)
             output_data = pd.read_csv(output_data)
         
             models = {
                 "Random Forest": RandomForestClassifier(),
-                }
+            }
 
-            # Define hyperparameters to search over for each model
             param_grid = {
                 "Random Forest": {'n_estimators': [200], 'max_depth': [None], 'min_samples_split': [2]},
-                }
+            }
             
-            results = {}
+            best_model = None
+            best_accuracy = 0
+            
             for name, model in models.items():
                 print(f"Training {name}...")
                 grid_search = GridSearchCV(estimator=model, param_grid=param_grid[name], cv=5, scoring='accuracy')
                 grid_search.fit(input_data, output_data)
-                best_params = grid_search.best_params_
-                best_model = grid_search.best_estimator_
-                #feature_name = model.get_feature_names_out()
-                accuracy = cross_val_score(best_model, input_data, 
-                                           output_data, cv=5, scoring='accuracy').mean()
-                results[name] = {'accuracy': accuracy, 'best_params': best_params}
-                            
-            if accuracy < 0.6:
-                raise CustomException("No best model found")
+                
+                accuracy = cross_val_score(grid_search.best_estimator_, input_data, output_data, cv=5, scoring='accuracy').mean()
+                
+                if accuracy > best_accuracy:
+                    best_accuracy = accuracy
+                    best_model = grid_search.best_estimator_
+                    
+            if best_model is None or best_accuracy < 0.6:
+                raise CustomException("No suitable model found with accuracy >= 0.6")
             else:
-                logging.info(f"Best model found with the accuracy score of {accuracy}")
-                #logging.info(f"Columns = {feature_name}")
-            
+                logging.info(f"Best model found with an accuracy score of {best_accuracy}")
+
             save_object(
                 self.model_trainer_config.trained_model_file_path,
                 best_model
             )
             
-            return(
-                accuracy
-            )   
-                     
-        except CustomException as e:
-            raise CustomException(e, sys)
+            return best_accuracy
+
+        except Exception as e:
+            raise CustomException(f"Error in model training: {str(e)}", sys)
             
         

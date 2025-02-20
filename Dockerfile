@@ -6,9 +6,9 @@ WORKDIR /app
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 # Set a default port if $PORT is not provided
-ENV PORT 8501
+ENV PORT 8000
 
 EXPOSE $PORT
 
-CMD streamlit run app.py --server.port $PORT --server.address 0.0.0.0
+CMD uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
