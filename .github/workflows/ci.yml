@@ -4,7 +4,7 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
+  
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,7 +14,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Fetch full repository from GitHub
-      run: git fetch --unshallow  # Ensures complete repo history is pulled
+      run: git fetch --unshallow
 
     - name: Install Git LFS
       run: sudo apt-get install -y git-lfs
@@ -23,7 +23,9 @@ jobs:
       run: |
         git lfs install
         git lfs pull
-        ls -lh artifacts/  # Verify model.pkl is correctly downloaded
+
+    - name: Verify model.pkl exists
+      run: ls -lh artifacts/
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v2
@@ -31,12 +33,12 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASS }}
 
+    - name: Verify Docker Login
+      run: docker info | grep -i "username"
+
     - name: Build the Docker image
       run: sudo docker build -t 0yash4/fastapi_pishing_domain:latest .
 
     - name: Push to Docker Hub
       run: sudo docker push 0yash4/fastapi_pishing_domain:latest
-
-    - name: Deleting all Docker images available in the system
-      run: sudo docker rmi -f $(sudo docker images -aq)
 
