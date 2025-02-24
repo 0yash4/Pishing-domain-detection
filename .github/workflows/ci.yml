@@ -15,9 +15,6 @@ jobs:
       with:
         fetch-depth: 0  # Ensures the full repo is cloned
 
-    - name: Fetch full repository from GitHub
-      run: git fetch --unshallow  # Ensures complete repo history is pulled
-
     - name: Log in to Docker Hub
       uses: docker/login-action@v2
       with:
