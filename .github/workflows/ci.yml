@@ -20,8 +20,10 @@ jobs:
         password: ${{ secrets.DOCKER_PASS }}
 
     - name: Build the Docker image
-      run: sudo docker build -t 0yash4/pishing-domain-detection:latest .
+      run: sudo docker build -t 0yash4/fastapi_pishing_domain:latest .
 
     - name: Push to Docker Hub
-      run: sudo docker push 0yash4/pishing-domain-detection:latest
+      run: sudo docker push 0yash4/fastapi_pishing_domain:latest
 
+    - name: Deleting all the Docker images availbale in the system
+      run: sudo docker rmi -f $(sudo docker images -aq)

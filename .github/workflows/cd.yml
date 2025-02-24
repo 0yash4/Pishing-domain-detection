@@ -20,11 +20,11 @@ jobs:
         sudo docker system prune -a -f --volumes
 
     - name: Pull Docker image
-      run: sudo docker pull 0yash4/pishing-domain-detection:latest
+      run: sudo docker pull 0yash4/fastapi_pishing_domain:latest
 
     - name: Delete Old docker container (if exists)
-      run: sudo docker rm -f pishing-domain-detection || true
+      run: sudo docker rm -f fastapi_pishing_domain || true
 
     - name: Run Docker Container
-      run: sudo docker run -d --name pishing-domain-detection -p 8000:8000 0yash4/pishing-domain-detection:latest
+      run: sudo docker run -d --name fastapi_pishing_domain -p 8000:8000 0yash4/fastapi_pishing_domain:latest
 #everything should work now
