@@ -7,7 +7,7 @@ on:
   
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
     - name: Check out repository
@@ -18,6 +18,12 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASS }}
+    
+    - name: Install dos2unix
+      run: sudo apt-get install -y dos2unix
+      
+    - name: Convert line endings for model.pkl
+      run: dos2unix model.pkl
 
     - name: Build the Docker image
       run: sudo docker build -t 0yash4/fastapi_pishing_domain:latest .

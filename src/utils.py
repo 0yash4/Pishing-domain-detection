@@ -8,6 +8,8 @@ import pandas as pd
 
 from src.exception import CustomException
 
+print("Checking pickle file existence:", os.path.exists(pkl_file_path))
+
 
 def save_object(file_path, obj):
     try:

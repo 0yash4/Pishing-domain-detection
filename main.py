@@ -3,6 +3,7 @@ import os
 from fastapi import FastAPI, Query
 from pydantic import BaseModel
 
+from src.components.data_ingestion_config import DataIngestionConfig
 from src.pipeline.prediction import custom_final_df
 from src.utils import load_object
 
@@ -10,7 +11,8 @@ from src.utils import load_object
 app = FastAPI()
 
 # Load the model
-pkl_file_path = os.path.join("artifacts", "model.pkl")
+ingestiConfig = DataIngestionConfig()
+pkl_file_path = ingestiConfig.pkl_file_path
 model = load_object(pkl_file_path)
 
 # Request model for input validation
@@ -33,3 +35,7 @@ def predict(data: URLRequest):
     result = "Phishing Site" if prediction[0] == 1 else "Safe Site"
 
     return {"url": data.url, "prediction": result}
+
+
+print("Checking pickle file existence:", os.path.exists(pkl_file_path))
+
