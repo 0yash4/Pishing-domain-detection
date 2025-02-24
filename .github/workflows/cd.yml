@@ -27,3 +27,4 @@ jobs:
 
     - name: Run Docker Container
       run: sudo docker run -d --name pishing-domain-detection -p 8000:8000 0yash4/pishing-domain-detection:latest
+#everything should work now
