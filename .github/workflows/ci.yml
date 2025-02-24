@@ -25,15 +25,6 @@ jobs:
     - name: Install dos2unix
       run: sudo apt-get install -y dos2unix
 
-    - name: Check if model.pkl exists
-      run: |
-        if [ -f model.pkl ]; then
-          echo "✅ model.pkl found!"
-        else
-          echo "❌ ERROR: model.pkl not found!"
-          exit 1
-        fi
-
     - name: Convert line endings for model.pkl
       if: hashFiles('model.pkl') != ''
       run: dos2unix model.pkl
