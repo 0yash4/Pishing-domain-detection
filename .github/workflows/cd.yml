@@ -7,11 +7,10 @@ on:
       - completed
 
 jobs:
-
   build:
-
     runs-on: self-hosted
-#test
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}  # Ensures CD only runs if CI succeeds
+
     steps:
     - name: Free up disk space by removing unused Docker resources
       run: |
@@ -22,9 +21,10 @@ jobs:
     - name: Pull Docker image
       run: sudo docker pull 0yash4/fastapi_pishing_domain:latest
 
-    - name: Delete Old docker container (if exists)
+    - name: Delete Old Docker Container (if exists)
       run: sudo docker rm -f fastapi_pishing_domain || true
 
     - name: Run Docker Container
       run: sudo docker run -d --name fastapi_pishing_domain -p 8000:8000 0yash4/fastapi_pishing_domain:latest
+
 #everything should work now
