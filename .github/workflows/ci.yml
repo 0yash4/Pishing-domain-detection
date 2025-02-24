@@ -10,8 +10,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check out repository
+    - name: Check out repository (full history)
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Ensures the full repo is cloned
+
+    - name: Fetch full repository from GitHub
+      run: git fetch --unshallow  # Ensures complete repo history is pulled
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v2
@@ -25,9 +30,9 @@ jobs:
     - name: Check if model.pkl exists
       run: |
         if [ -f model.pkl ]; then
-          echo "model.pkl found!"
+          echo "✅ model.pkl found!"
         else
-          echo "ERROR: model.pkl not found!"
+          echo "❌ ERROR: model.pkl not found!"
           exit 1
         fi
 
@@ -41,6 +46,5 @@ jobs:
     - name: Push to Docker Hub
       run: sudo docker push 0yash4/fastapi_pishing_domain:latest
 
-    - name: Deleting all the Docker images available in the system
+    - name: Deleting all Docker images available in the system
       run: sudo docker rmi -f $(sudo docker images -aq)
-
