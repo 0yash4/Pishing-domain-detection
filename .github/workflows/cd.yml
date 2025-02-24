@@ -12,6 +12,21 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}  # Ensures CD only runs if CI succeeds
 
     steps:
+    - name: Check out repository (full history)
+      uses: actions/checkout@v4
+
+    - name: Fetch full repository from GitHub
+      run: git fetch --unshallow  # Ensures complete repo history is pulled
+
+    - name: Install Git LFS
+      run: sudo apt-get install -y git-lfs
+
+    - name: Initialize and pull LFS-tracked files
+      run: |
+        git lfs install
+        git lfs pull
+        ls -lh artifacts/  # Verify model.pkl is correctly downloaded
+
     - name: Free up disk space by removing unused Docker resources
       run: |
         sudo docker stop $(sudo docker ps -aq) || true
@@ -26,5 +41,3 @@ jobs:
 
     - name: Run Docker Container
       run: sudo docker run -d --name fastapi_pishing_domain -p 8000:8000 0yash4/fastapi_pishing_domain:latest
-
-#everything should work now

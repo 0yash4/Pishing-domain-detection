@@ -37,5 +37,3 @@ def predict(data: URLRequest):
     return {"url": data.url, "prediction": result}
 
 
-print("Checking pickle file existence:", os.path.exists(pkl_file_path))
-
