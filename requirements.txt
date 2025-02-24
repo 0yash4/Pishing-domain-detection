@@ -9,7 +9,6 @@ dnspython
 whois
 python-whois
 python-dotenv 
-xgboost
 joblib
 uvicorn
 requests 
