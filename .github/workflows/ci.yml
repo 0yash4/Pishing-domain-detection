@@ -21,8 +21,18 @@ jobs:
     
     - name: Install dos2unix
       run: sudo apt-get install -y dos2unix
-      
+
+    - name: Check if model.pkl exists
+      run: |
+        if [ -f model.pkl ]; then
+          echo "model.pkl found!"
+        else
+          echo "ERROR: model.pkl not found!"
+          exit 1
+        fi
+
     - name: Convert line endings for model.pkl
+      if: hashFiles('model.pkl') != ''
       run: dos2unix model.pkl
 
     - name: Build the Docker image
@@ -31,5 +41,6 @@ jobs:
     - name: Push to Docker Hub
       run: sudo docker push 0yash4/fastapi_pishing_domain:latest
 
-    - name: Deleting all the Docker images availbale in the system
+    - name: Deleting all the Docker images available in the system
       run: sudo docker rmi -f $(sudo docker images -aq)
+
