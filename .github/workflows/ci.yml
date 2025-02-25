@@ -42,3 +42,4 @@ jobs:
     - name: Push to Docker Hub
       run: sudo docker push 0yash4/fastapi_pishing_domain:latest
 
+#working fine now
