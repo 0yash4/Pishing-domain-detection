@@ -7,7 +7,7 @@ on:
   
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
     - name: Check out repository (full history)
@@ -28,7 +28,10 @@ jobs:
       run: ls -lh artifacts/
 
     - name: Log in to Docker Hub
-      run: echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASS }}
     
     - name: Verify Docker Login
       run: docker info | grep -i "username"
