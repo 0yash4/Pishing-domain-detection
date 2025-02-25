@@ -37,9 +37,11 @@ jobs:
       run: docker info | grep -i "username"
 
     - name: Build the Docker image
-      run: sudo docker build -t 0yash4/fastapi_pishing_domain .
+      run: |
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/fastapi_pishing_domain:latest .
 
     - name: Push to Docker Hub
-      run: sudo docker push 0yash4/fastapi_pishing_domain
+      run: |
+        docker push ${{ secrets.DOCKER_USERNAME }}/fastapi_pishing_domain:latest
 
 #working fine now
