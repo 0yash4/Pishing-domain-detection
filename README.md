@@ -64,7 +64,9 @@ The dataset consists of two variations:
 
 ## Artifacts
 - **AWS Proof**: ![AWS Proof](artifacts/AWS_proof.png)
-- **Project Demo Video**: [Watch on YouTube](https://youtu.be/ymeDAvyinuw)
+- **Project Demo Video**:
+  
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/ymeDAvyinuw" frameborder="0" allowfullscreen></iframe>
 
 ## Repository
 Check out the project repository: [Phishing Domain Detection](https://github.com/0yash4/Pishing-domain-detection)
