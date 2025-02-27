@@ -6,6 +6,10 @@ This project aims to detect phishing domains using a custom-built pipeline that 
 ## Features
 I have created a custom pipeline to extract 111 features from a given URL. Below are the feature categories and the specific attributes extracted:
 
+## Artifacts
+- **CICD Working**: ![AWS Proof](artifacts/AWS_proof.png)
+- **Project Demo Video**: [Youtube Video](https://www.youtube.com/embed/ymeDAvyinuw)
+
 ### Table 1: Dataset attributes based on URL
 1. qty_dot_url - Number of '.' signs
 2. qty_hyphen_url - Number of '-' signs
@@ -61,10 +65,6 @@ The dataset also includes features extracted from:
 The dataset consists of two variations:
 1. A balanced dataset with 58,645 instances (30,647 phishing, 27,998 legitimate)
 2. An imbalanced dataset with 88,647 instances (30,647 phishing, 58,000 legitimate)
-
-## Artifacts
-- **AWS Proof**: ![AWS Proof](artifacts/AWS_proof.png)
-- **Project Demo Video**: ![Youtube Video](https://www.youtube.com/embed/ymeDAvyinuw)
   
 ## Repository
 Check out the project repository: [Phishing Domain Detection](https://github.com/0yash4/Pishing-domain-detection)
