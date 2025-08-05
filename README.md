@@ -69,9 +69,6 @@ The dataset consists of two variations:
 ## Repository
 Check out the project repository: [Phishing Domain Detection](https://github.com/0yash4/Pishing-domain-detection)
 
-## Author
-I am a full-time Technical Recruiter and a part-time Machine Learning Engineer/ Data Scientist. I dedicate 2-4 hours daily to ML/DS projects while balancing my full-time job. In my free time, I enjoy fitness, longevity research, and reading (currently working through *Crime and Punishment*). I also have a deep interest in psychology and communication. 
-
 ## Contact
 Feel free to reach out for collaboration or discussion on cybersecurity and ML applications!
 
